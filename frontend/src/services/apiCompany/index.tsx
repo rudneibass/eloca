@@ -3,7 +3,6 @@ import { Api } from '../api'
  
 
 async function listCompany(): Promise<CompanyInterface[]> { 
-
   return [
     {codigo:1, empresa: 1, sigla: 'FIAT', razao_social: 'FCA FIAT CHRYSLER AUTOMOVEIS BRASIL LTDA.'},
     {codigo:2, empresa: 2, sigla: 'FORD', razao_social: 'FORD MOTOR COMPANY BRASIL LTDA.'},
@@ -11,6 +10,14 @@ async function listCompany(): Promise<CompanyInterface[]> {
     {codigo:4, empresa: 4, sigla: 'SCANIA', razao_social: ' SCANIA LATIN AMERICA LTDA.'},
   ]
 }
+
+async function searchCompany(): Promise<CompanyInterface[]> { 
+  return [
+    {codigo:1, empresa: 1, sigla: 'FIAT', razao_social: 'FCA FIAT CHRYSLER AUTOMOVEIS BRASIL LTDA.'},
+    {codigo:2, empresa: 2, sigla: 'FORD', razao_social: 'FORD MOTOR COMPANY BRASIL LTDA.'},
+  ]
+}
+
 
 
 async function getCompany(param: string): Promise<CompanyInterface[]> { 
@@ -29,9 +36,9 @@ async function getCompany(param: string): Promise<CompanyInterface[]> {
   return []
 }
 
-async function updateCompany(company : CompanyInterface): Promise<CompanyInterface[]>{
+async function updateCompany({pk_company, company}:{pk_company: string, company : CompanyInterface}): Promise<CompanyInterface[]>{
   try {
-    const response = await Api.put('company/update', company)
+    const response = await Api.put('company/update', {pk_company, company})
     return response.data 
   } catch (error) {
     console.log(error)
@@ -54,5 +61,6 @@ export const apiCompany = {
   listCompany,
   getCompany,
   updateCompany,
-  storeCompany
+  storeCompany,
+  searchCompany
 }

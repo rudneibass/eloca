@@ -19,37 +19,43 @@ const data = ref<CompanyInterface>({
 })
 
 async function formSubmit(){
+  
   if(pk_company.value){
+      const params = {pk_company: pk_company.value, company: data.value}
+      const response = await apiCompany.updateCompany(params)
+      console.log(response)
       toast('Tem pk,faça update',{autoClose: 2000})
   } 
 
   if(!pk_company.value){
+      const params =  data.value
+      const response = await apiCompany.storeCompany(params)
+      console.log(response)
       toast('Não tem pk, faça insert',{autoClose: 2000})
   } 
-  /*data.value.codigo = parseInt(pk_company.value)
-  console.log(data.value)
 
-  const response = await apiCompany.updateCompany(data.value)
-  data.value = response[0] 
-
-  toast('Cadastro atualizado com sucesso',{autoClose: 2000})*/
 }
+
 
 onMounted(async () => {
   await router.isReady()
   if(route.params){
     const params = route.params
+    
     if (Array.isArray(params.pk)) {
       pk_company.value = params.pk[0]
       const response = await apiCompany.getCompany(pk_company.value)
       data.value = response[0]
-    } else {
+    } 
+
+   if(typeof params.pk === "string"){
         pk_company.value = params.pk
         const response = await apiCompany.getCompany(pk_company.value)
         data.value = response[0]    
     } 
+
   }
-       
+
 })
 
 </script>
@@ -57,6 +63,8 @@ onMounted(async () => {
 <template>
     <div>
         <CustomCard card-title="Empresas" short-description="Cadastro de Empresas">
+          
+          <section>
             <form action="" @submit.prevent="formSubmit">
               <div class="row">
                 
@@ -83,13 +91,14 @@ onMounted(async () => {
 
                 <div class="col-md-12 d-flex justify-content-end">
                   <RouterLink to="/company" class="btn btn-outline-secondary">
-                    Voltar
+                    <font-awesome-icon icon="fa-solid fa-undo" class="icon"/> Voltar
                   </RouterLink>
                   &nbsp;
-                  <button type="submit" class="btn btn-secondary">Salvar</button>
+                  <button type="submit" class="btn btn-secondary"><font-awesome-icon icon="fa-solid fa-save" class="icon"/>  Salvar</button>
                 </div>
               </div>
             </form>
+          </section>
         </CustomCard>
     </div>
 </template>

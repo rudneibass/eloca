@@ -2,21 +2,49 @@ html{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Roboto;
+  font-family: 'Roboto', sans-serif;
+  
+  @media (max-width: 1080px) {
+    font-size: 93.75%;
+  }
+
+  @media (max-width: 720px) {
+    font-size: 87.5%;
+  }
+
+  @media (max-width: 560px) {
+    font-size: 75%;
+  }
+
+  @media (max-width: 375px) {
+    font-size: 68.75%;
+  }
 }
+
 
 
 body {
   min-height: 100vh;
 }
 
-
-
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
 }
 
+button, a{
+  border-radius: 2px !important; 
+}
+
+.gap-1{
+  gap: 1rem;
+}
+.gap-2{
+  gap: 2rem;
+}
+.gap-3{
+  gap: 3rem;
+}
 
 ::-webkit-scrollbar {
   width: 0px; 

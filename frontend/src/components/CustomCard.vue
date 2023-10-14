@@ -1,15 +1,15 @@
 <template>
   <div class="card">
     <div class="card-header" style="border: none; background: #fff">
-      <div
-        class="container border-bottom d-flex flex-column jstify-content-center pt-3 pb-1"
-      >
+      <div class="container border-bottom d-flex flex-column jstify-content-center pt-3 pb-1">
         <h3 class="text-muted mb-0">{{cardTitle}}</h3>
         <p class="text-muted" style="font-size: 1.1rem">{{shortDescription}}</p>
       </div>
     </div>
-    <div class="card-body p-5 pt-4">
-      <slot></slot>
+    <div class="card-body">
+      <div class="container">
+        <slot></slot>
+      </div>
     </div>
   </div>
 </template>
