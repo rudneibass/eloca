@@ -15,7 +15,23 @@ class EmpresasController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $data = Empresa::orderBy('razao_social')->get();
+            return response()->json($data, 200);
+        } catch (\Exception $e) {
+            return response()->json($e, 500);
+        }
+    }
+
+    public function search($search_param)
+    {
+        #return response()->json(['msg'=>$search_param], 500);
+        try {
+            $data = Empresa::orderByDesc('razao_social')->get();
+            return response()->json($data, 200);
+        } catch (\Exception $e) {
+            return response()->json($e, 500);
+        }
     }
 
     /**
@@ -27,14 +43,18 @@ class EmpresasController extends Controller
     public function store(EmpresasRequest $request)
     {
         try {   
-            
+
             $json = $request->getContent();
             $request_data = json_decode($json, true);
+            $request_data['recnum'] = Empresa::max('recnum') + 1;
             $response_data = Empresa::create($request_data);
-            return response()->json($response_data);
+
+            $data = Empresa::where('codigo', $response_data->id)->get();
+
+            return response()->json($data, 201);
 
         } catch (\Exception $e) {
-            return response()->json($e);
+            return response()->json($e, 500);
         }
     }
 
@@ -46,7 +66,17 @@ class EmpresasController extends Controller
      */
     public function show($id)
     {
-        //
+        try {
+            $obj = Empresa::where('codigo', $id)->get();
+            if (!$obj)
+                return response()->json(['message'=> 'Registro não localizado no banco de dados'], 404);
+            
+            $data = $obj;
+            return response()->json($data, 200);
+
+        } catch (\Exception $e) {
+            return response()->json($e, 500);
+        }
     }
 
     /**
@@ -58,7 +88,23 @@ class EmpresasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $obj = Empresa::where('codigo', $id);
+            if (!$obj)
+                return response()->json(['message'=> 'Registro não localizado no banco de dados'], 404);
+            
+            $json = $request->getContent();
+            $request_data = json_decode($json, true);
+
+            $obj->update($request_data);
+
+            $data = Empresa::where('codigo', $id)->get();
+
+            return response()->json($data, 201);
+
+        } catch (\Exception $e) {
+            return response()->json($e, 500);
+        }
     }
 
     /**
@@ -69,6 +115,19 @@ class EmpresasController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $obj = Empresa::where('codigo', $id);
+            if (!$obj)
+                return response()->json(['message'=> 'Registro não localizado no banco de dados'], 404);
+            
+            $data = Empresa::where('codigo', $id)->get();
+
+            $obj->delete();
+            
+            return response()->json($data, 201);
+
+        } catch (\Exception $e) {
+            return response()->json($e, 500);
+        }
     }
 }

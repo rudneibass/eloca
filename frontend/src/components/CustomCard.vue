@@ -36,7 +36,7 @@
     box-shadow: 0 6px 10px -4px rgba(0,0,0,.15);
     color: #252422;
     margin-bottom: 20px;
-    padding-bottom: 2rem;
+    padding-bottom: 1rem;
     position: relative;
 }
 

@@ -22,8 +22,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::controller(EmpresasController::class)->group(function(){
     Route::get('/company', 'index');
+    Route::get('/company/search/{search_param}', 'search');
+    Route::get('/company/show/{id}', 'show');
     Route::post('/company/store', 'store');
     Route::put('/company/update/{id}', 'update');
-    Route::patch('/company/update/{id}', 'update');
-    Route::delete('/company/update/{id}', 'destroy');
+    Route::delete('/company/destroy/{id}', 'destroy');
 });

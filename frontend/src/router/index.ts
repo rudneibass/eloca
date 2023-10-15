@@ -24,12 +24,12 @@ const router = createRouter({
     },
     {
       path: '/company',
-      name: 'company',
+      name: 'company.index',
       component: CompanyListPage
     },
     {
-      path: '/company/update/:pk',
-      name: 'company.update',
+      path: '/company/show/:pk',
+      name: 'company.show',
       component: CompanyFormPage
     },
     {

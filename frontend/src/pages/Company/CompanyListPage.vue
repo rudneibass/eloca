@@ -6,26 +6,40 @@ import { CompanyInterface } from '@services/apiCompany/types'
 
 
 const data = ref<CompanyInterface[]>([])
-const columns = ref({})
+
 const performSearch = ref(false)
+const searchParam = ref('')
+const thereIsData = ref(false)
+const loading = ref(true)
 
 const handleDestroy = (id:number) => {
   console.log(id)
 }
 
 async function formSubmit(){
-  const response = await apiCompany.searchCompany()
+  loading.value = true
+
+  const response = await apiCompany.listCompany()
   data.value = response
-  performSearch.value = true
+
+  if(data.value.length === 0){
+      thereIsData.value = true
+    }
+
+  performSearch.value = true  
+  loading.value = false  
 }
 
 onMounted( async () => {
   if(!performSearch.value){
     const response = await apiCompany.listCompany()
     data.value = response
-    columns.value = Object.keys(data.value[0])
+
+    if(data.value.length === 0){
+      thereIsData.value = true
+    }
   }
-  
+ loading.value = false 
 })
 
 </script>
@@ -39,7 +53,7 @@ onMounted( async () => {
               <div class="row justify-content-between">
                 <div class="col-md-5">
                   <div class="input-group mb-3">
-                    <input id="serach_param" type="text" class="form-control" placeholder="Pesquisar">
+                    <input id="serach_param" type="text" class="form-control" placeholder="Pesquisar" v-model="searchParam">
                     <div class="input-group-append">
                       <button class="btn bg-warning"><font-awesome-icon icon="fa-solid fa-search" class="icon"/></button>
                     </div>
@@ -68,21 +82,36 @@ onMounted( async () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(row, index) in data" :key="index">
-                    <td v-for="(value, key) in row" :key="key">{{ value }}</td>
+                  <tr v-for="(item, index) in data" :key="index">
+                    <td>{{ item.codigo }}</td>
+                    <td>{{ item.empresa }}</td>
+                    <td>{{ item.sigla }}</td>
+                    <td>{{ item.razao_social }}</td>
                     <td class="text-center">
-                        <button class="btn btn-sm btn-danger" @click="handleDestroy(row.codigo)"><i class="fs-7 bi-trash"></i></button>
+                        <button class="btn btn-sm btn-danger" @click="handleDestroy(item.codigo)"><i class="fs-7 bi-trash"></i></button>
                       </td>
                       <td class="text-center">
-                        <RouterLink :to="{name: 'company.update', params:{pk: row.codigo}}" class="btn btn-sm btn-secondary">
+                        <RouterLink :to="{name: 'company.show', params:{pk: item.codigo}}" class="btn btn-sm btn-secondary">
                           <i class="fs-7 bi-pencil"></i>
                         </RouterLink>  
                     </td>
                   </tr>
+  
                 </tbody>
               </table>
+              <div v-if="thereIsData" class="alert alert-secondary text-center">
+                  Não há dados cadastrados!
+              </div>
+              <div v-if="loading"  class="alert alert-secondary text-center">
+                <img src="@assets/loading-gray-md.svg" />
+              </div>
             </div>
           </section>
         </CustomCard>
     </div>
 </template>
+<style scoped>
+  .alert{
+    border-radius: 2px !important;
+  }
+</style>
