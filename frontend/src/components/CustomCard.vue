@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card" v-motion-fade>
     <div class="card-header" style="border: none; background: #fff">
       <div class="container border-bottom d-flex flex-column jstify-content-center pt-3 pb-1">
         <h3 class="text-muted mb-0">{{cardTitle}}</h3>

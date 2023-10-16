@@ -25,10 +25,12 @@ class EmpresasController extends Controller
 
     public function search($search_param)
     {
-        #return response()->json(['msg'=>$search_param], 500);
         try {
-            $data = Empresa::orderByDesc('razao_social')->get();
+            $data = Empresa::where('razao_social', 'LIKE', '%'.$search_param.'%')
+                            ->whereOr('sigla', 'LIKE', '%'.$search_param.'%')
+                            ->get();
             return response()->json($data, 200);
+
         } catch (\Exception $e) {
             return response()->json($e, 500);
         }

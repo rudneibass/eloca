@@ -6,6 +6,7 @@ import ClientListPage from '@pages/Client/ClientListPage.vue'
 
 import CompanyListPage from '@pages/Company/CompanyListPage.vue'
 import CompanyFormPage from '@pages/Company/CompanyFormPage.vue'
+import CompanyDestroy from '@pages/Company/CompanyDestroy.vue'
 
 
 
@@ -36,6 +37,11 @@ const router = createRouter({
       path: '/company/store',
       name: 'company.store',
       component: CompanyFormPage
+    },
+    {
+      path: '/company/destroy/:pk',
+      name: 'company.destroy',
+      component: CompanyDestroy
     },
     {
       path: '/about',

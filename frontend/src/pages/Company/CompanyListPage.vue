@@ -1,29 +1,30 @@
 <script  setup lang="ts">
 import  CustomCard  from '@components/CustomCard.vue'
 import { ref, onMounted } from 'vue'
+import { Ref } from 'vue'
 import { apiCompany } from '@services/apiCompany'
 import { CompanyInterface } from '@services/apiCompany/types'
-
+import { toast } from  'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 
 const data = ref<CompanyInterface[]>([])
 
 const performSearch = ref(false)
 const searchParam = ref('')
-const thereIsData = ref(false)
+const thereIsNoData = ref(false)
 const loading = ref(true)
 
-const handleDestroy = (id:number) => {
-  console.log(id)
-}
-
 async function formSubmit(){
+  
   loading.value = true
-
-  const response = await apiCompany.listCompany()
+  thereIsNoData.value = false
+  data.value = []
+  
+  const response = searchParam.value.trim() === ''? await  apiCompany.listCompany() : await apiCompany.searchCompany(searchParam.value) 
   data.value = response
 
   if(data.value.length === 0){
-      thereIsData.value = true
+      thereIsNoData.value = true
     }
 
   performSearch.value = true  
@@ -36,7 +37,7 @@ onMounted( async () => {
     data.value = response
 
     if(data.value.length === 0){
-      thereIsData.value = true
+      thereIsNoData.value = true
     }
   }
  loading.value = false 
@@ -47,13 +48,12 @@ onMounted( async () => {
 <template>
     <div>
         <CustomCard card-title="Empresas" short-description="Listagem de Empresas">
-
           <section>
             <form action=""  @submit.prevent="formSubmit">
               <div class="row justify-content-between">
                 <div class="col-md-5">
                   <div class="input-group mb-3">
-                    <input id="serach_param" type="text" class="form-control" placeholder="Pesquisar" v-model="searchParam">
+                    <input id="serach_param" v-model="searchParam" type="text" class="form-control" placeholder="Pesquisar">
                     <div class="input-group-append">
                       <button class="btn bg-warning"><font-awesome-icon icon="fa-solid fa-search" class="icon"/></button>
                     </div>
@@ -73,12 +73,12 @@ onMounted( async () => {
               <table class="table table-striped table-hover table-bordered">
                 <thead>
                   <tr>
-                    <th scope="col">Código</th>
-                    <th scope="col">Nº Empresa</th>
-                    <th scope="col">Sigla</th>
-                    <th scope="col">Razão Social</th>
-                    <th scope="col" class="text-center"></th>
-                    <th scope="col" class="text-center"></th>
+                    <th scope="col" class="width-5"><small>Cód.</small></th>
+                    <th scope="col" class="width-10"><small>Nº Empresa</small></th>
+                    <th scope="col" class="width-10"><small>Sigla</small></th>
+                    <th scope="col"><small>Razão Social</small></th>
+                    <th scope="col" class="width-5 text-center"></th>
+                    <th scope="col" class="width-5 text-center"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -88,7 +88,9 @@ onMounted( async () => {
                     <td>{{ item.sigla }}</td>
                     <td>{{ item.razao_social }}</td>
                     <td class="text-center">
-                        <button class="btn btn-sm btn-danger" @click="handleDestroy(item.codigo)"><i class="fs-7 bi-trash"></i></button>
+                        <RouterLink :to="{name: 'company.destroy', params:{pk: item.codigo}}" class="btn btn-sm btn-danger">
+                          <i class="fs-7 bi-trash"></i>
+                        </RouterLink>  
                       </td>
                       <td class="text-center">
                         <RouterLink :to="{name: 'company.show', params:{pk: item.codigo}}" class="btn btn-sm btn-secondary">
@@ -99,7 +101,7 @@ onMounted( async () => {
   
                 </tbody>
               </table>
-              <div v-if="thereIsData" class="alert alert-secondary text-center">
+              <div v-if="thereIsNoData" class="alert alert-secondary text-center">
                   Não há dados cadastrados!
               </div>
               <div v-if="loading"  class="alert alert-secondary text-center">
@@ -109,6 +111,7 @@ onMounted( async () => {
           </section>
         </CustomCard>
     </div>
+
 </template>
 <style scoped>
   .alert{

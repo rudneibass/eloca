@@ -25,8 +25,6 @@ async function searchCompany(searchParam: string): Promise<CompanyInterface[]> {
   return []
 }
 
-
-
 async function showCompany(param: string): Promise<CompanyInterface[]> { 
   try {
     const response = await api.get(`company/show/${param}`)
@@ -60,7 +58,16 @@ async function updateCompany(pk_company: string, company : CompanyStoreUpdateInt
   return []
 }
 
-
+async function destroyCompany(pk_company: string): Promise<CompanyInterface[]>{
+  try {
+    const response = await api.delete(`company/destroy/${pk_company}`)
+    console.log(response.data)
+    return response.data 
+  } catch (error) {
+    console.log(error)
+  }
+  return []
+}
 
 
 export const apiCompany = {
@@ -68,5 +75,6 @@ export const apiCompany = {
   showCompany,
   updateCompany,
   storeCompany,
-  searchCompany
+  searchCompany,
+  destroyCompany
 }

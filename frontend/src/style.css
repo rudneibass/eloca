@@ -46,6 +46,21 @@ button, a{
   gap: 3rem;
 }
 
+.width-5{
+  width: 5%;
+}
+
+.width-10{
+  width: 10%;
+}
+.width-15{
+  width: 15%;
+}
+
+.width-20{
+  width: 20%;
+}
+
 ::-webkit-scrollbar {
   width: 0px; 
   height: 12px; 

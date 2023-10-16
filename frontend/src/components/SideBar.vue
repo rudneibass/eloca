@@ -1,5 +1,21 @@
 <script lang="ts" setup>
 
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const scenario = () => {
+  return router.currentRoute.value.path === '/'
+}
+
+const company = () => {
+  return router.currentRoute.value.path === '/company'
+}
+
+const client = () => {
+  return router.currentRoute.value.path === '/client'
+}
+
 </script>
 
 <template>
@@ -16,21 +32,21 @@
     <nav>
     <ul id="sidebar-menu" class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start">
       <li>
-        <RouterLink to="/" class="nav-link align-middle px-0"> 
+        <RouterLink to="/" class="nav-link align-middle px-0" :class="scenario() ? 'active-route': ''"> 
           <i class="fs-4 bi-house"></i>
           <span class="ms-1 d-none d-sm-inline">Cenário</span>
         </RouterLink>
       </li>
 
       <li>
-        <RouterLink to="/company" class="nav-link align-middle px-0"> 
+        <RouterLink to="/company" class="nav-link align-middle px-0" :class="company() ? 'active-route': ''"> 
           <i class="fs-4 bi-grid"></i>
           <span class="ms-1 d-none d-sm-inline">Empresas</span>
         </RouterLink>
       </li>
 
       <li>
-        <RouterLink to="/client" class="nav-link align-middle px-0"> 
+        <RouterLink to="/client" class="nav-link align-middle px-0" :class="client() ? 'active-route': ''"> 
           <i class="fs-4 bi-people"></i>
           <span class="ms-1 d-none d-sm-inline">Clientes</span>
         </RouterLink>
@@ -51,9 +67,9 @@
     width: 100%;
   }
 
- .nav-link::before {
+ .active-route::before {
     border-bottom: 17px solid transparent;
-    border-right: 17px solid #ddd;
+    border-right: 17px solid #F4F3EF;
     border-top: 17px solid transparent;
     content: "";
     display: inline-block;
