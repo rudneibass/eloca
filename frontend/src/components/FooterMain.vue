@@ -2,13 +2,9 @@
 <script setup lang="ts"></script>
 <template>
   <footer className="border-top">
- 
-       <small>&copy; 2023. Todos os Direitos Reservados
-        
+       <small>
+            &copy; 2023. Todos os Direitos Reservados
        </small> 
- 
-
-
   </footer>
 </template>
 
@@ -19,5 +15,6 @@
     width: 100%;
     padding: 25px 20px;
     text-align: end;
+    background-color: #F4F3EF;  
   }
 </style>

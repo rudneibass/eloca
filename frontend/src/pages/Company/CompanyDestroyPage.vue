@@ -35,6 +35,7 @@ async function handleDestroy(){
   setTimeout(() => {
     router.push({name: 'company.index'})
   }, 2000)
+
 }
 
 
@@ -105,7 +106,7 @@ onMounted(async () => {
                   </RouterLink>
                   &nbsp;
 
-                  <button v-if="!loading" class="btn btn-danger" type="button" @click="handleDestroy" :disabled="disableDestroyBtn">
+                  <button v-if="!loading" class="btn btn-danger" type="button"  :disabled="disableDestroyBtn" @click="handleDestroy">
                     <font-awesome-icon icon="fa-solid fa-remove" class="icon"/>  Excluir
                   </button>
                 

@@ -6,7 +6,7 @@ import ClientListPage from '@pages/Client/ClientListPage.vue'
 
 import CompanyListPage from '@pages/Company/CompanyListPage.vue'
 import CompanyFormPage from '@pages/Company/CompanyFormPage.vue'
-import CompanyDestroy from '@pages/Company/CompanyDestroy.vue'
+import CompanyDestroyPage from '@pages/Company/CompanyDestroyPage.vue'
 
 
 
@@ -41,15 +41,7 @@ const router = createRouter({
     {
       path: '/company/destroy/:pk',
       name: 'company.destroy',
-      component: CompanyDestroy
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../pages/NotFoundPage.vue')
+      component: CompanyDestroyPage
     }
   ]
 })

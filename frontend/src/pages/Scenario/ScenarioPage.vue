@@ -6,7 +6,7 @@ import {scenario, tablesScenario, whatToDo} from './data'
 <template>
     <div>
         <CustomCard card-title="Cenário" short-description="Descrição e Requisitos Básicos">
-            <div>
+            <div class="p-4 pt-3">
                 <h4 class="card-title">{{ scenario.title }}</h4>
                 <br />
                 <p

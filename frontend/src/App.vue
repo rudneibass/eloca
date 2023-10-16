@@ -32,9 +32,11 @@
     position: relative;
     }
   main {
-    padding: 30px;
-    padding-bottom: 150px;
+    padding: 30px 30px 0px 30px;
     
-    overflow: overlay; 
+    padding-bottom: 10vh;
+    max-height: 90vh;
+    overflow: scroll;
+    
   }
 </style>

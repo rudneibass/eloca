@@ -25,6 +25,8 @@ html{
 
 body {
   min-height: 100vh;
+  max-height: 100vh;
+  overflow-y: hidden;
 }
 
 h1 {
@@ -62,12 +64,13 @@ button, a{
 }
 
 ::-webkit-scrollbar {
-  width: 0px; 
+  width: 5px; 
   height: 12px; 
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888; 
+   background: #8888888a; 
+  /*background: #FFC107;*/
   border-radius: 6px; 
 }
 

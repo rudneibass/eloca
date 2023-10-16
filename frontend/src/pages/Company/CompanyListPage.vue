@@ -28,7 +28,7 @@ async function formSubmit(){
     }
 
   performSearch.value = true  
-  loading.value = false  
+  loading.value = false 
 }
 
 onMounted( async () => {
@@ -98,7 +98,6 @@ onMounted( async () => {
                         </RouterLink>  
                     </td>
                   </tr>
-  
                 </tbody>
               </table>
               <div v-if="thereIsNoData" class="alert alert-secondary text-center">
@@ -108,6 +107,12 @@ onMounted( async () => {
                 <img src="@assets/loading-gray-md.svg" />
               </div>
             </div>
+
+            <div class="d-flex justify-content-between p-1">
+                <small>Total de registros:{{ data.length }}</small>
+                <small>Página 1 de 1</small>
+            </div>
+
           </section>
         </CustomCard>
     </div>
@@ -116,5 +121,9 @@ onMounted( async () => {
 <style scoped>
   .alert{
     border-radius: 2px !important;
+  }
+  .table-responsive{
+    max-height: 40vh;
+    overflow-y: scroll;
   }
 </style>
