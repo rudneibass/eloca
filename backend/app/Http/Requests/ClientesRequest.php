@@ -28,7 +28,7 @@ class ClientesRequest extends FormRequest
         return [
             'razao_social' => 'required',
             'tipo' => 'required',
-            'cpf_cnpj' => 'required',
+            'cpf_cnpj' => 'required|unique:clientes',
             'empresa' => 'required',
         ];
     }
@@ -36,10 +36,7 @@ class ClientesRequest extends FormRequest
     public function failedValidation(Validator $validator) 
     {
         throw new HttpResponseException(response()->json([
-            'status' => 400,   
-            'success' => false,
-            'message' => 'Validation errors',
-            'data' => $validator->errors()
+             $validator->errors()
         ], 400));
 
     }
@@ -50,6 +47,7 @@ class ClientesRequest extends FormRequest
             'razao_social.required' => 'O campo Razão Social é obrigatório.',
             'tipo.required' => 'O campo Tipo é obrigatório.',
             'cpf_cnpj.required' => 'O campo CPF_CNPJ é obrigatório.',
+            'cpf_cnpj.unique' => 'CPF_CNPJ já cadastrado e não permite repetição.',
             'empresa.required' => 'O campo Empresa é obrigatório.',
         ];
     }

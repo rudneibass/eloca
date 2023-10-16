@@ -5,6 +5,8 @@ import { useRoute, useRouter } from 'vue-router'
 import { toast } from  'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 
+import { isValidCPF, isValidCNPJ } from '@utils/index'
+
 import  CustomCard  from '@components/CustomCard.vue'
 import { apiClient } from '@services/apiClient'
 import { ClientInterface } from '@services/apiClient/types'
@@ -21,33 +23,46 @@ const pk_client = ref('')
 const loading = ref(false)
 
   
-function formValidate(formData:ClientInterface ){
+async function formValidate(formData:ClientInterface ){
   const formErrors = []  
   if(!formData.razao_social || formData.razao_social.trim() === ''){
     formErrors.push('Preencha o campo "Razão Social"')
   }
 
-  if(!formData.cpf_cnpj || formData.cpf_cnpj.trim() === ''){
-    formErrors.push('Preencha o campo "Sigla"')
-  }
-
   if(!formData.empresa){
-    formErrors.push('Preencha o campo "Nº da Empresa"')
+    formErrors.push('Preencha o campo "Empresa"')
   }
 
-  if(formData.empresa < 1){
-    formErrors.push('Preencha o campo "Nº da Empresa" com um número positivo maior que zero')
+  if(!formData.cpf_cnpj || formData.cpf_cnpj.trim() === ''){
+    formErrors.push('Preencha o campo "CPF/CNPJ"')
   }
 
-  if(typeof formData.empresa !== 'number'){
-    formErrors.push('O campo "Nº da Empresa" só permite números')
+  /*if(formData.cpf_cnpj || formData.cpf_cnpj.trim() !== ''){
+    const response = await apiClient.listClient()
+    const cpf = response.filter(item => item.cpf_cnpj === formData.cpf_cnpj)
+    if(cpf.length > 0){
+      formErrors.push('"CPF/CNPJ" já cadastrado e não permite repetição')
+    }
+  }*/
+
+  if(formData.tipo.trim() === 'PF'){
+
+    if(!isValidCPF(formData.cpf_cnpj)){
+      formErrors.push('"CPF" inválido')
+    }
+  }
+
+  if(formData.tipo.trim() === 'PJ'){
+    if(!isValidCNPJ(formData.cpf_cnpj)){
+      formErrors.push('"CNPJ" inválido')
+    }
   }
 
   if(formErrors.length > 0){
     formErrors.map(item => toast.info(item, {autoClose: false}))
     return false
   }
- 
+  
   return true
 }
 
