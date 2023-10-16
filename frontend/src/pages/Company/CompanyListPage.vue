@@ -1,11 +1,10 @@
 <script  setup lang="ts">
 import  CustomCard  from '@components/CustomCard.vue'
 import { ref, onMounted } from 'vue'
-import { Ref } from 'vue'
+
 import { apiCompany } from '@services/apiCompany'
 import { CompanyInterface } from '@services/apiCompany/types'
-import { toast } from  'vue3-toastify'
-import 'vue3-toastify/dist/index.css'
+
 
 const data = ref<CompanyInterface[]>([])
 
@@ -74,9 +73,9 @@ onMounted( async () => {
                 <thead>
                   <tr>
                     <th scope="col" class="width-5"><small>Cód.</small></th>
+                    <th scope="col"><small>Razão Social</small></th>  
+                    <th scope="col" class="width-10"><small>Sigla</small></th>                  
                     <th scope="col" class="width-10"><small>Nº Empresa</small></th>
-                    <th scope="col" class="width-10"><small>Sigla</small></th>
-                    <th scope="col"><small>Razão Social</small></th>
                     <th scope="col" class="width-5 text-center"></th>
                     <th scope="col" class="width-5 text-center"></th>
                   </tr>
@@ -84,9 +83,9 @@ onMounted( async () => {
                 <tbody>
                   <tr v-for="(item, index) in data" :key="index">
                     <td>{{ item.codigo }}</td>
-                    <td>{{ item.empresa }}</td>
-                    <td>{{ item.sigla }}</td>
                     <td>{{ item.razao_social }}</td>
+                    <td>{{ item.sigla }}</td>
+                    <td>{{ item.empresa }}</td>
                     <td class="text-center">
                         <RouterLink :to="{name: 'company.destroy', params:{pk: item.codigo}}" class="btn btn-sm btn-danger">
                           <i class="fs-7 bi-trash"></i>
@@ -109,7 +108,7 @@ onMounted( async () => {
             </div>
 
             <div class="d-flex justify-content-between p-1">
-                <small>Total de registros:{{ data.length }}</small>
+                <small>Total de registros: {{ data.length }}</small>
                 <small>Página 1 de 1</small>
             </div>
 

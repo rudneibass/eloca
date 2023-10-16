@@ -1,34 +1,19 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
+namespace Database\Seeders;
 
-class ClientesCreate extends Migration
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+
+class ClientesSeeder extends Seeder
 {
     /**
-     * Run the migrations.
+     * Run the database seeds.
      *
      * @return void
      */
-    public function up()
+    public function run()
     {
-        Schema::create('clientes', function (Blueprint $table) {
-            $table->id('codigo');
-
-            $table->bigInteger('recnum')->unique();
-            $table->string('razao_social', 255);
-            $table->enum('tipo', ['PJ', 'cpf_cnpj' => '03793046001', 'PF']);
-            $table->string('cpf_cnpj', 14);
-            $table->timestamps();
-
-            $table->unsignedBigInteger('empresa');
-            
-            $table->foreign('empresa')->references('codigo')->on('empresas')->onDelete('cascade');
-        });
-
-
         DB::table('clientes')->insert([
             ['empresa'=>'1', 'recnum'=> '1', 'tipo' => 'PJ', 'cpf_cnpj' => '13253153000192', 'razao_social' => 'CONCESSIONÁRIA CREDENCIADA BMW BRASIL  LTDA'],
             ['empresa'=>'2', 'recnum'=> '2', 'tipo' => 'PJ', 'cpf_cnpj' => '34359527000129', 'razao_social' => 'DISTRIBUIDORA DE PEÇAS E ACESSÓRIOS FIAT BRASIL LTDA.'],
@@ -41,15 +26,6 @@ class ClientesCreate extends Migration
             ['empresa'=>'9', 'recnum'=> '9', 'tipo' => 'PJ', 'cpf_cnpj' => '69835390000116', 'razao_social' => 'PEÇAS E ACESSÓRIOS VOLKSWAGEN DO BRASIL LTDA'],
         ]);
 
-    }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('clientes');
     }
 }

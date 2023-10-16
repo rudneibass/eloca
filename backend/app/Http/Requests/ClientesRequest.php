@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
 
-class EmpresasRequest extends FormRequest
+class ClientesRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,7 +27,8 @@ class EmpresasRequest extends FormRequest
     {
         return [
             'razao_social' => 'required',
-            'sigla' => 'required',
+            'tipo' => 'required',
+            'cpf_cnpj' => 'required',
             'empresa' => 'required',
         ];
     }
@@ -47,8 +48,9 @@ class EmpresasRequest extends FormRequest
     {
         return [
             'razao_social.required' => 'O campo Razão Social é obrigatório.',
-            'sigla.required' => 'O campo Razão Social é obrigatório.',
-            'empresa.required' => 'O campo Razão Social é obrigatório.',
+            'tipo.required' => 'O campo Tipo é obrigatório.',
+            'cpf_cnpj.required' => 'O campo CPF_CNPJ é obrigatório.',
+            'empresa.required' => 'O campo Empresa é obrigatório.',
         ];
     }
 }

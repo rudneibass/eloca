@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\EmpresasController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,4 +28,13 @@ Route::controller(EmpresasController::class)->group(function(){
     Route::post('/company/store', 'store');
     Route::put('/company/update/{id}', 'update');
     Route::delete('/company/destroy/{id}', 'destroy');
+});
+
+Route::controller(ClientesController::class)->group(function(){
+    Route::get('/client', 'index');
+    Route::get('/client/search/{search_param}', 'search');
+    Route::get('/client/show/{id}', 'show');
+    Route::post('/client/store', 'store');
+    Route::put('/client/update/{id}', 'update');
+    Route::delete('/client/destroy/{id}', 'destroy');
 });

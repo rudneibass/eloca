@@ -2,11 +2,14 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import ScenarioPage from '@pages/Scenario/ScenarioPage.vue'
 
-import ClientListPage from '@pages/Client/ClientListPage.vue'
-
 import CompanyListPage from '@pages/Company/CompanyListPage.vue'
 import CompanyFormPage from '@pages/Company/CompanyFormPage.vue'
 import CompanyDestroyPage from '@pages/Company/CompanyDestroyPage.vue'
+
+import ClientListPage from '@pages/Client/ClientListPage.vue'
+import ClientFormPage from '@pages/Client/ClientFormPage.vue'
+import ClientDestroyPage from '@pages/Client/ClientDestroyPage.vue'
+
 
 
 
@@ -17,11 +20,6 @@ const router = createRouter({
       path: '/',
       name: '/',
       component: ScenarioPage
-    },
-    {
-      path: '/client',
-      name: 'client',
-      component: ClientListPage
     },
     {
       path: '/company',
@@ -42,7 +40,27 @@ const router = createRouter({
       path: '/company/destroy/:pk',
       name: 'company.destroy',
       component: CompanyDestroyPage
-    }
+    },
+    {
+      path: '/client',
+      name: 'client.index',
+      component: ClientListPage
+    },
+    {
+      path: '/client/store',
+      name: 'client.store',
+      component: ClientFormPage
+    },
+    {
+      path: '/client/show/:pk',
+      name: 'client.show',
+      component: ClientFormPage
+    },
+    {
+      path: '/client/destroy/:pk',
+      name: 'client.destroy',
+      component: ClientDestroyPage
+    },
   ]
 })
 

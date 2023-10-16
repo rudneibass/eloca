@@ -9,11 +9,11 @@ const scenario = () => {
 }
 
 const company = () => {
-  return router.currentRoute.value.path === '/company'
+  return router.currentRoute.value.path.includes('/company')
 }
 
 const client = () => {
-  return router.currentRoute.value.path === '/client'
+  return router.currentRoute.value.path.includes('/client')
 }
 
 </script>

@@ -1,30 +1,19 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
+namespace Database\Seeders;
 
-class EmpresasCreate extends Migration
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+
+class EmpresasSeeder extends Seeder
 {
     /**
-     * Run the migrations.
+     * Run the database seeds.
      *
      * @return void
      */
-    public function up()
+    public function run()
     {
-        Schema::create('empresas', function (Blueprint $table) {
-            $table->id('codigo');
-            
-            $table->bigInteger('recnum')->unique();
-            $table->bigInteger('empresa');
-            $table->string('sigla', 40);
-            $table->string('razao_social', 255);
-            $table->timestamps();
-
-        });
-
         DB::table('empresas')->insert([
             ['empresa'=>'1', 'recnum'=> '1', 'sigla' => 'BMW', 'razao_social' => 'BMW DO BRASIL LTDA'],
             ['empresa'=>'2', 'recnum'=> '2', 'sigla' => 'FIAT', 'razao_social' => 'FCA FIAT CHRYSLER AUTOMOVEIS BRASIL LTDA.'],
@@ -36,16 +25,5 @@ class EmpresasCreate extends Migration
             ['empresa'=>'8', 'recnum'=> '8', 'sigla' => 'SCANIA', 'razao_social' => 'SCANIA LATIN AMERICA LTDA.'],
             ['empresa'=>'9', 'recnum'=> '9', 'sigla' => 'VW', 'razao_social' => 'VOLKSWAGEN DO BRASIL INDUSTRIA DE VEICULOS AUTOMOTORES LTDA'],
         ]);
-
-    }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('empresas');
     }
 }
