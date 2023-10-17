@@ -11,7 +11,7 @@ Se a porta 8000 do seu computador estiver livre o backend será iniciado em http
 
 ## Frontend
 
-Abra um terminal e execute os seguintes comandos para iniciar o frontend da aplicação. Se estiver usando Windows é aconselhavel utilizar PowerShell como administrador. Desenvolvido com Node v16.14.0 e Npm v8.3.1.
+Abra um terminal e execute os seguintes comandos para iniciar o frontend da aplicação. Se estiver usando Windows é aconselhavel utilizar PowerShell como administrador. Desenvolvido com Node v16.14.0 e Npm v8.3.1. e Vue3.
 
 1. cd eloca/frontend
 2. npm install
