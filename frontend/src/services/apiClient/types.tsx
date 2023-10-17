@@ -1,5 +1,6 @@
   export interface ClientInterface {
     codigo: number;
+    recnum: number;
     empresa: number;
     tipo: string;
     cpf_cnpj: string;

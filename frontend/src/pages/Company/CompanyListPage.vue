@@ -73,6 +73,7 @@ onMounted( async () => {
                 <thead>
                   <tr>
                     <th scope="col" class="width-5"><small>Cód.</small></th>
+                    <th scope="col" class="width-5"><small>Reqnum</small></th>
                     <th scope="col"><small>Razão Social</small></th>  
                     <th scope="col" class="width-10"><small>Sigla</small></th>                  
                     <th scope="col" class="width-10"><small>Nº Empresa</small></th>
@@ -83,6 +84,7 @@ onMounted( async () => {
                 <tbody>
                   <tr v-for="(item, index) in data" :key="index">
                     <td>{{ item.codigo }}</td>
+                    <td>{{ item.recnum }}</td>
                     <td>{{ item.razao_social }}</td>
                     <td>{{ item.sigla }}</td>
                     <td>{{ item.empresa }}</td>

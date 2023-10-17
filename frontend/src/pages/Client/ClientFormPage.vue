@@ -5,7 +5,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { toast } from  'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 
-import { isValidCPF, isValidCNPJ } from '@utils/index'
+import { isValidCPF, isValidCNPJ} from '@utils/index'
 
 import  CustomCard  from '@components/CustomCard.vue'
 import { apiClient } from '@services/apiClient'
@@ -23,38 +23,62 @@ const pk_client = ref('')
 const loading = ref(false)
 
   
-async function formValidate(formData:ClientInterface ){
+async function formValidate(formData:ClientInterface){
   const formErrors = []  
-  if(!formData.razao_social || formData.razao_social.trim() === ''){
+  
+  if(Object.keys(formData).length === 0){
+    toast.info('Preencha os campos obrigatórios', {autoClose: false})
+    return false
+  }
+
+  if(!formData.razao_social){
     formErrors.push('Preencha o campo "Razão Social"')
+  }
+
+  if(formData.razao_social && formData.razao_social.trim() == ''){
+    formErrors.push('Preencha o campo "Razão Social"')
+  }
+
+  if(!formData.tipo){
+    formErrors.push('Preencha o campo "Tipo"')
+  }
+
+  if(!formData.cpf_cnpj){
+    formErrors.push('Preencha o campo "CPF/CNPJ"')
   }
 
   if(!formData.empresa){
     formErrors.push('Preencha o campo "Empresa"')
   }
 
-  if(!formData.cpf_cnpj || formData.cpf_cnpj.trim() === ''){
-    formErrors.push('Preencha o campo "CPF/CNPJ"')
-  }
-
-  /*if(formData.cpf_cnpj || formData.cpf_cnpj.trim() !== ''){
-    const response = await apiClient.listClient()
-    const cpf = response.filter(item => item.cpf_cnpj === formData.cpf_cnpj)
-    if(cpf.length > 0){
-      formErrors.push('"CPF/CNPJ" já cadastrado e não permite repetição')
-    }
-  }*/
-
-  if(formData.tipo.trim() === 'PF'){
-
+  if(formData.tipo === 'PF'){
     if(!isValidCPF(formData.cpf_cnpj)){
       formErrors.push('"CPF" inválido')
     }
   }
 
-  if(formData.tipo.trim() === 'PJ'){
+  if(formData.tipo === 'PJ'){
     if(!isValidCNPJ(formData.cpf_cnpj)){
       formErrors.push('"CNPJ" inválido')
+    }
+  }
+
+  if(formData.cpf_cnpj && formData.cpf_cnpj.trim() !== '' && !pk_client.value){
+    const response = await apiClient.listClient()
+    const cpf = response.filter(item => item.cpf_cnpj === formData.cpf_cnpj)
+    
+    if(cpf.length > 0){
+      formErrors.push('"CPF/CNPJ" já cadastrado e não permite repetição')
+    }
+  }
+
+  if(formData.cpf_cnpj && formData.cpf_cnpj.trim() !== '' && pk_client.value){
+    const response = await apiClient.listClient()
+   
+    const client = response.filter(item => item.cpf_cnpj === formData.cpf_cnpj)
+    
+    if(client[0].codigo.toString() !== pk_client.value){
+      formErrors.push('"CPF/CNPJ" já cadastrado e não permite repetição')
     }
   }
 
@@ -69,7 +93,8 @@ async function formValidate(formData:ClientInterface ){
 async function formSubmit(){
 
   // Simple Validation
-  const isValidForm = formValidate(data.value)
+  const isValidForm = await formValidate(data.value)
+ 
   if(!isValidForm){
     return
   }
