@@ -7,7 +7,7 @@ Abra um terminal e execute os seguintes comandos para iniciar o backend da aplic
 4. php artisan migrate
 5. php artisan serve
 
-Se a porta 8000 do seu computador estiver livre o backend será iniciado em http://127.0.0.1:8000, caso contrário verifique no terminal a porta acionada.
+Se a porta 8000 do seu computador estiver livre o backend será iniciado em http://127.0.0.1:8000, caso contrário verifique no terminal a porta acionada. Se isso acontecer edite o .env do frontend e coloque a porta atual.
 
 ## Frontend
 
@@ -17,4 +17,4 @@ Abra um terminal e execute os seguintes comandos para iniciar o frontend da apli
 2. npm install
 3. npm run dev
 
-Se a porta 5173 do seu computador estiver livre o frontend será iniciado em http://127.0.0.1:5173, caso contrário verifique no terminal a porta acionada.
+Se a porta 5173 do seu computador estiver livre o frontend será iniciado em http://127.0.0.1:5173, caso contrário verifique no terminal a porta acionada. Se o backend não estiver rodando na porta 8000 edite o .env coloque a porta atual.
